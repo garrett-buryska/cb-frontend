@@ -1,0 +1,120 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+/* <-- ADD THIS LINE! */
+
+@theme {
+  /* Defining custom colors in v4. 
+    Using the --color prefix tells Tailwind to build utility classes for these!
+  */
+  --color-board: #D7C49E;
+  --color-list: #EADBC8;
+  --color-paper: #FEFAF6;
+
+  --color-ink: #342A21;
+  --color-ink-muted: #8A7A6B;
+
+  --color-stamp: #2B5B84;
+  --color-stamp-hover: #1F4363;
+  --color-tape: #DB9334;
+}
+
+/* Let's keep that subtle cardboard dot-texture for the main background */
+@layer base {
+  body {
+    background-color: var(--color-board);
+    background-image: radial-gradient(rgba(52, 42, 33, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-board);
+    background-image: radial-gradient(rgba(52, 42, 33, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Fix the Typography Plugin to feel "Analog" */
+  .prose {
+    --tw-prose-body: var(--color-ink);
+    --tw-prose-headings: var(--color-ink);
+    --tw-prose-links: var(--color-stamp);
+    --tw-prose-bold: var(--color-ink);
+    --tw-prose-counters: var(--color-ink-muted);
+    --tw-prose-bullets: var(--color-ink-muted);
+    max-width: none;
+  }
+
+  /* Make headers look like heavy ink stamps */
+  .prose h1,
+  .prose h2,
+  .prose h3 {
+    font-weight: 850 !important;
+    letter-spacing: -0.02em;
+    margin-top: 1.5em !important;
+    margin-bottom: 0.5em !important;
+  }
+
+  /* Fix list indentation so checkboxes aren't floating in no-man's-land */
+  .prose ul {
+    padding-left: 1.25rem !important;
+    list-style-type: none !important;
+    /* We'll use the checkboxes as bullets */
+  }
+
+  .prose li {
+    margin-top: 0.25em !important;
+    margin-bottom: 0.25em !important;
+    padding-left: 0 !important;
+  }
+
+  /* The "Stamped" Checkbox */
+  .prose input[type="checkbox"] {
+    appearance: none;
+    background-color: var(--color-list);
+    /* Recessed look */
+    border: 2px solid rgba(52, 42, 33, 0.1);
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 4px;
+    margin-right: 0.75rem;
+    display: inline-grid;
+    place-content: center;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: all 0.1s ease;
+  }
+
+  .prose input[type="checkbox"]:checked {
+    background-color: var(--color-tape);
+    border-color: var(--color-tape);
+  }
+
+  /* Draw a white checkmark inside when checked */
+  .prose input[type="checkbox"]:checked::before {
+    content: "";
+    width: 0.65rem;
+    height: 0.65rem;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    background-color: white;
+  }
+
+  /* Dim and Strike-through checked tasks */
+  .prose li:has(input[type="checkbox"]:checked) {
+    color: var(--color-ink-muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(219, 147, 52, 0.4);
+    /* Tape-colored strike */
+    opacity: 0.8;
+  }
+
+  /* Remove the aggressive top margin from the very first element in the Markdown area */
+  .prose> :first-child {
+    margin-top: 0 !important;
+  }
+
+  /* Also remove the bottom margin from the very last element to keep things tight */
+  .prose> :last-child {
+    margin-bottom: 0 !important;
+  }
+}
