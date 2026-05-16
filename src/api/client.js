@@ -1,6 +1,6 @@
 // src/api/client.js
 
-const API_URL = 'http://localhost:8080/api';
+const API_URL = 'http://24.177.98.125:443/api';
 
 // Helper function to extract a specific cookie by name
 function getCookie(name) {
