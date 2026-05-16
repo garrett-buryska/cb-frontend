@@ -146,7 +146,7 @@ export default function Boards() {
 						>
 							<div>
 								<h3 className="font-extrabold text-lg text-ink leading-tight pr-12">{board.title}</h3>
-								<p className="text-xs text-ink-muted mt-1 font-medium">Updated: {board.updatedAt}</p>
+								<p className="text-xs text-ink-muted mt-1 font-medium">Updated: {new Date(board.updated_at).toLocaleString()}</p>
 							</div>
 
 							{/* Action Buttons (Visible on hover) */}
