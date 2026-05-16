@@ -35,7 +35,7 @@ const router = createBrowserRouter([
   // 4. 404 Catch-all
   {
     path: '*',
-    element: <div>404 Not Found</div> // TODO: REDIRECT PAGE
+    element: <Navigate to="/list" replace />,
   }
 ]);
 
