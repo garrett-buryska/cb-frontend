@@ -4,50 +4,53 @@ const API_URL = 'https://api-cardboard.garrettburyska.work/api';
 
 // Helper function to extract a specific cookie by name
 function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
 }
 
 export const apiClient = async (endpoint, method, { body, ...customConfig } = {}) => {
-  const headers = {
-    'Content-Type': 'application/json',
-  };
+        const headers = {
+                'Content-Type': 'application/json',
+        };
 
-  // Grab the CSRF token from the browser's cookies and attach it
-  const csrfToken = getCookie('csrf_token');
-  if (csrfToken) {
-    headers['X-CSRF-Token'] = csrfToken;
-  }
+        // Grab the CSRF token from the browser's cookies and attach it\
+        const csrfToken = getCookie('csrf_token');
+        console.log("All visible cookies:", document.cookie); // See what JS can actually access
+        console.log("Extracted CSRF Token:", csrfToken);        // See if it found it
 
-  const config = {
-    method: method,
-    ...customConfig,
-    headers: {
-      ...headers,
-      ...customConfig.headers,
-    },
-    // CRITICAL: This sends the HttpOnly session cookie
-    credentials: 'include', 
-  };
+        if (csrfToken) {
+                headers['X-CSRF-Token'] = csrfToken;
+        }
 
-  if (body) {
-    config.body = JSON.stringify(body);
-  }
+        const config = {
+                method: method,
+                ...customConfig,
+                headers: {
+                        ...headers,
+                        ...customConfig.headers,
+                },
+                // CRITICAL: This sends the HttpOnly session cookie
+                credentials: 'include',
+        };
 
-  const response = await fetch(`${API_URL}${endpoint}`, config);
-  
-  // Handle empty responses (like 204 No Content for Deletes)
-  if (response.status === 204) {
-    return null;
-  }
+        if (body) {
+                config.body = JSON.stringify(body);
+        }
 
-  const data = await response.json();
+        const response = await fetch(`${API_URL}${endpoint}`, config);
 
-  if (!response.ok) {
-    throw new Error(data.error || 'An error occurred with the API');
-  }
+        // Handle empty responses (like 204 No Content for Deletes)
+        if (response.status === 204) {
+                return null;
+        }
 
-  return data;
+        const data = await response.json();
+
+        if (!response.ok) {
+                throw new Error(data.error || 'An error occurred with the API');
+        }
+
+        return data;
 };
