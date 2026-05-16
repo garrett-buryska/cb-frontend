@@ -1,6 +1,6 @@
 // src/api/client.js
 
-const API_URL = 'http://24.177.98.125:443/api';
+const API_URL = 'https://api.cardboard.mooo.com/api';
 
 // Helper function to extract a specific cookie by name
 function getCookie(name) {
