@@ -17,8 +17,6 @@ export const apiClient = async (endpoint, method, { body, ...customConfig } = {}
 
         // Grab the CSRF token from the browser's cookies and attach it\
         const csrfToken = getCookie('csrf_token');
-        console.log("All visible cookies:", document.cookie); // See what JS can actually access
-        console.log("Extracted CSRF Token:", csrfToken);        // See if it found it
 
         if (csrfToken) {
                 headers['X-CSRF-Token'] = csrfToken;
