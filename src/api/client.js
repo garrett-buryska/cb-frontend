@@ -1,6 +1,6 @@
 // src/api/client.js
 
-const API_URL = 'https://api.cardboard.garrettburyska.work/api';
+const API_URL = 'https://api-cardboard.garrettburyska.work/api';
 
 // Helper function to extract a specific cookie by name
 function getCookie(name) {
